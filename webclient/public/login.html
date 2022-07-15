@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-  <script src="./lib/ajax_send-1.2.1.min.js"></script>
-  <script src="./lib/stylespam-2.1.6.min.js"></script>
-  <script src="./scripts/login.js"></script>
-  <script>
-    function OnStart(){
-      const submit = document.getElementById("submit");
-      const email = document.getElementById("email");
-      const password = document.getElementById("password");
-      submit.onclick = function(_event){
-        _event.preventDefault();
-        login(email.value, password.value);
-      }
-    }
-  </script>
+    <link rel='stylesheet' href='/lib/font-awesome/css/font-awesome.min.css' />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="/lib/ajax_send-1.2.1.min.js"></script>
+    <script src="/lib/stylespam-2.1.6.min.js"></script>
+    <script src="/scripts/login.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script>
+        function OnStart() {
+            const submit = document.getElementById("submit");
+            const email = document.getElementById("email");
+            const password = document.getElementById("password");
+            submit.onclick = function(_event) {
+                app.wall.show();
+                app.loading.show();
+                _event.preventDefault();
+                login(email.value, password.value);
+            }
+        }
+    </script>
 </head>
+
 <body onload="OnStart()">
     <form class="form">
         <h2 class="form__title">Inicia Sesion</h2>
         <p class="form__paragraph">¿ Aun no tienes una cuenta ? <a href="/auth/register" class="form__link">Unete ahora!</a></p>
-    
+
         <div class="form__container">
             <div class="form__group">
                 <input type="email" id="email" class="form__input" placeholder=" " autofocus>
@@ -42,4 +48,5 @@
         </div>
     </form>
 </body>
+
 </html>

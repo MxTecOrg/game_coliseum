@@ -15,11 +15,6 @@ const UserModel = (DataTypes) => {
             unique: true,
             allowNull: false
         },
-        nickname: {
-            type: DataTypes.STRING,
-            unique: true,
-            allowNull: false
-        },
         email: {
             type: DataTypes.STRING,
             unique: true,

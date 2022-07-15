@@ -1,12 +1,11 @@
 const config = require("../../config.js");
-const DB = require(config.LOGIC + "/helpers/DB.js");
 const authenticator = require("./authenticator.js");
 const bcrypt = require("bcryptjs");
-const {User} = require(config.LOGIC + "/helpers/_DB.js");
+const {User} = require(config.LOGIC + "/helpers/DB.js");
 
 /* function login
 * @Method : POST
-* @param req {body : {username , password , app_token}}
+* @param req {body : {email , password}}
 * @param res {}
 */
 
@@ -16,8 +15,8 @@ const login = async (req, res) => {
     password;
     try {
         const body = req.body;
-        username = body.username;
-        password = body.password;
+        email = (body.email ? body.email : undefined);
+        password = (body.password ? body.password : undefined);
     } catch (err) {
         return res.json({
             status: false,
@@ -28,9 +27,9 @@ const login = async (req, res) => {
 
     const account = await User.findOne({
         where : {
-            username : username
+            email : (email ? email : "d")
         }
-    });// await DB.findUserByName(username);
+    });
 
     if (!account) {
         return res.json({
@@ -44,6 +43,13 @@ const login = async (req, res) => {
             status : false,
             data : "ACC_NOT_VERIFIED",
             email: account.email
+        });
+    }
+    
+    if(account.level == 0){
+        return res.json({
+            status: false,
+            data: "BANNED"
         });
     }
 

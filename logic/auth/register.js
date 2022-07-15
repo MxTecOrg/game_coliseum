@@ -1,9 +1,7 @@
 const config = require("../../config.js");
 const uid = require(config.LOGIC + "/helpers/uid.js");
 const bcrypt = require("bcryptjs");
-const DB = require(config.LOGIC + "/helpers/DB.js");
-const sendToken = require("./sendToken.js");
-const { User } = require(config.LOGIC + "/helpers/_DB.js");
+const { User } = require(config.LOGIC + "/helpers/DB.js");
 
 /* Funtion register
  * @params req{ body : {username , email , password , rpassword , token}}
@@ -15,8 +13,7 @@ const register = async (req, res) => {
     let username,
         email,
         password,
-        rpassword,
-        token;
+        rpassword;
 
     try {
         const body = req.body;
@@ -24,7 +21,6 @@ const register = async (req, res) => {
         email = (body.email ? body.email : undefined);
         password = (body.password ? body.password : undefined);
         rpassword = (body.rpassword ? body.rpassword : undefined);
-        token = (body.token ? body.token : undefined)
     } catch (err) {
         return res.json({
             status: false,
@@ -99,20 +95,24 @@ const register = async (req, res) => {
 
     try {
 
-        await User.create({
+        const uc = await User.create({
             user_id: parseInt(uid.num(8)),
             username: username,
             color: "#000000".replace(/0/g, function() { return (~~((Math.random() * 10) + 6)).toString(16); }),
-            nickname: "xuser_" + uid.alphanum(6),
             email: email,
             password: bcrypt.hashSync(password, 10),
             verified: true
         });
-        sendToken(email);
 
-        return res.json({
+        if(uc) return res.json({
             status: true,
             data: "REGISTERED"
+        });
+        
+        return res.json({
+            status: false,
+            data: "DATA_ERROR",
+            error: err
         });
 
     } catch (err) {

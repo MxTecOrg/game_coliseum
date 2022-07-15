@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-  <script src="./lib/ajax_send-1.2.1.min.js"></script>
-  <script src="./lib/stylespam-2.1.6.min.js"></script>
-  <script src="./scripts/register.js"></script>
-  <script>
-    function OnStart(){
-      const submit = document.getElementById("submit");
-      const username = document.getElementById("username");
-      const email = document.getElementById("email");
-      const password = document.getElementById("password");
-      const rpassword = document.getElementById("rpassword");
-      
-      submit.onclick = function (_event){
-      
-        _event.preventDefault();
-        register(username.value , email.value , password.value , rpassword.value);
-      }
-      
-      
-    }
-  </script>
+    <link rel='stylesheet' href='/lib/font-awesome/css/font-awesome.min.css' />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="/lib/ajax_send-1.2.1.min.js"></script>
+    <script src="/lib/stylespam-2.1.6.min.js"></script>
+    <script src="/scripts/register.js"></script>
+    <script src="/scripts/app.js"></script>
+    <script>
+        function OnStart() {
+            const submit = document.getElementById("submit");
+            const username = document.getElementById("username");
+            const email = document.getElementById("email");
+            const password = document.getElementById("password");
+            const rpassword = document.getElementById("rpassword");
+            app.wall.init();
+            app.loading.init();
+
+            submit.onclick = function(_event) {
+                app.wall.show();
+                app.loading.show();
+                _event.preventDefault();
+                register(username.value, email.value, password.value, rpassword.value);
+            }
+
+
+        }
+    </script>
 </head>
+
 <body onload="OnStart()">
     <form class="form">
         <h2 class="form__title">Registro</h2>
         <p class="form__paragraph">¿ Ya tienes una cuenta ? <a href="/auth/login" class="form__link">Inicia sesion!</a></p>
-    
+
         <div class="form__container">
             <div class="form__group">
                 <input type="text" id="username" class="form__input" placeholder=" " autofocus>
@@ -54,8 +61,9 @@
                 <span class="form__line"></span>
             </div>
 
-            <input type="button" class="form__submit" id="submit"  value="Registro">
+            <input type="button" class="form__submit" id="submit" value="Registro">
         </div>
     </form>
 </body>
+
 </html>
