@@ -18,8 +18,6 @@
             const email = document.getElementById("email");
             const password = document.getElementById("password");
             submit.onclick = function(_event) {
-                app.wall.show();
-                app.loading.show();
                 _event.preventDefault();
                 login(email.value, password.value);
             }

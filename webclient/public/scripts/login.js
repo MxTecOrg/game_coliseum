@@ -6,8 +6,6 @@ function login(email, password) {
         email: email,
         password: password,
     }, (data, response) => {
-        app.wall.hide();
-        app.loading.hide();
         if (response === 200) {
             data = JSON.parse(data);
             if (!data.status) {

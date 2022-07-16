@@ -19,12 +19,8 @@
             const email = document.getElementById("email");
             const password = document.getElementById("password");
             const rpassword = document.getElementById("rpassword");
-            app.wall.init();
-            app.loading.init();
 
             submit.onclick = function(_event) {
-                app.wall.show();
-                app.loading.show();
                 _event.preventDefault();
                 register(username.value, email.value, password.value, rpassword.value);
             }

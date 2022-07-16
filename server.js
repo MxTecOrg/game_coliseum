@@ -6,13 +6,9 @@
 const config = require("./config.js");
 const express = require("express");
 const app = express();
-const server = require("http").Server(app);
-const io = require("socket.io")(server , {
-    cors : {
-        origin : "*",
-        method : ["POST" , "GET"]
-    }
-});
+const http = require("http");
+const server = http.createServer(app);
+const Socks = require(config.LOGIC + "/Socks.js");
 const router = require(config.LOGIC + "/router.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -60,10 +56,13 @@ app.use((req , res) => {
     status: false, message: "ERROR 404"});
 });
 
-server.listen(config.PORT , (log) => console.log("Server running on port:" + config.PORT));
 
-/* Exporting and Importing socket.io methods */
-module.exports = io;
+server.listen(config.PORT);
 
-require(config.LOGIC + "/socket.js");
+const socks = new Socks();
 
+socks.onConnection((socket) => {
+    console.log("Se connecto " + socket.__id );
+});
+
+socks.listen(server);

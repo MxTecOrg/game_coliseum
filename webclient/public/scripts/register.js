@@ -8,8 +8,6 @@ function register(username, email, password, rpassword) {
         password: password,
         rpassword: rpassword
     }, (data, response) => {
-        app.wall.hide();
-        app.loading.hide();
         if (response === 200) {
             data = JSON.parse(data);
             spam.alert({
