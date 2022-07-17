@@ -8,7 +8,12 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-const Socks = require(config.LOGIC + "/Socks.js");
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*",
+        method: ["POST", "GET"]
+    }
+});
 const router = require(config.LOGIC + "/router.js");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -57,12 +62,10 @@ app.use((req , res) => {
 });
 
 
-server.listen(config.PORT);
+server.listen(config.PORT , (log) => console.log("Server running on port:" + config.PORT));
 
-const socks = new Socks();
+/* Exporting and Importing socket.io methods */
+module.exports = io;
 
-socks.onConnection((socket) => {
-    console.log("Se connecto " + socket.__id );
-});
+require(config.LOGIC + "/socket.js");
 
-socks.listen(server);
