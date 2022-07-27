@@ -10,6 +10,12 @@ const config = {
         secret: "super_secret_token_keyword",
         expire: "365d"
     },
+    GAME: {
+        width: 25000,
+        height: 25000,
+        min_planets_per_solar: 3,
+        max_planets_per_solar: 10
+    },
     SERVER: { version: "v0.0.1" },
 };
 

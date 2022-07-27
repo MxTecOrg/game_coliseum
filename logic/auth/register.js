@@ -1,7 +1,7 @@
 const config = require("../../config.js");
 const uid = require(config.LOGIC + "/helpers/uid.js");
 const bcrypt = require("bcryptjs");
-const { User } = require(config.LOGIC + "/helpers/DB.js");
+const { User , Planet} = require(config.LOGIC + "/helpers/DB.js");
 
 /* Funtion register
  * @params req{ body : {username , email , password , rpassword , token}}
@@ -94,10 +94,28 @@ const register = async (req, res) => {
 
 
     try {
+        
+        const planets = await Planet.findAll({
+            where: {
+                habitated: 0
+            }
+        });
+        
+        const planet = planets[Math.floor(Math.random() * planets.length)];
+        
+        const userid = parseInt(uid.num(12));
+        await planet.setData({
+            habitated: user_id,
+            falodium: 5000,
+            cristagen: 5000,
+            badario: 2000,
+            hidrolium: 500
+        });
 
         const uc = await User.create({
-            user_id: parseInt(uid.num(8)),
+            user_id: userid,
             username: username,
+            planets: "[" + planet.planet_id + "]",
             color: "#000000".replace(/0/g, function() { return (~~((Math.random() * 10) + 6)).toString(16); }),
             email: email,
             password: bcrypt.hashSync(password, 10),

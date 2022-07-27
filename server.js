@@ -69,3 +69,4 @@ module.exports = io;
 
 require(config.LOGIC + "/socket.js");
 
+require(config.LOGIC + "/engine/galaxyBuilder.js")(1000);

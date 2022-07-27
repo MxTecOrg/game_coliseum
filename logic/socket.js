@@ -42,7 +42,9 @@ io.on("connection", async (socket) => {
     await user.setData({
         isOnline: true
     });
-
+    
+    socket.__id__ = id;
+    
     client(io, socket, id);
 
     socket.on("disconnect", async (data) => {
